@@ -8,7 +8,7 @@ var bottle_experience = 1
 func _ready():
 	anim_sprite.play("idle")
 
-func tween_exp_bottle(percent: float, start_position: Vector2):
+func tween_exp_bug(percent: float, start_position: Vector2):
 	var player = get_tree().get_first_node_in_group("player") as Node2D
 	if player == null:
 		return
@@ -19,7 +19,7 @@ func tween_exp_bottle(percent: float, start_position: Vector2):
 	rotation = lerp_angle(rotation, direction_degrees, 0.05)
 
 func exp_collected():
-	Global.experience_bottle_collected.emit(bottle_experience)
+	Global.experience_bug_collected.emit(bottle_experience)
 	queue_free()
 
 func disable_collosoin():
@@ -37,6 +37,6 @@ func _on_area_2d_area_entered(area):
 		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	await tween_out.finished
 	var tween = create_tween()
-	tween.tween_method(tween_exp_bottle.bind(global_position), 0.0, 1.0, 0.3)\
+	tween.tween_method(tween_exp_bug.bind(global_position), 0.0, 1.0, 0.3)\
 		.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_callback(exp_collected)

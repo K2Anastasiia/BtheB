@@ -11,10 +11,10 @@ var current_level = 1
 
 
 func _ready():
-	Global.experience_bottle_collected.connect(on_experience_bottle_collected)
+	Global.experience_bug_collected.connect(on_experience_bug_collected)
 	
 
-func on_experience_bottle_collected (experience):
+func on_experience_bug_collected (experience):
 	current_experience = min(current_experience + experience, target_experience)
 	experience_update.emit(current_experience, target_experience)
 	
