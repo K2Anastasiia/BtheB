@@ -11,7 +11,7 @@ var rules := [90, 30, 60, 180]
 var current_row: Array = []
 var generation: int = 0
 var is_ready: bool = true
-var danger_timer: float = 0.2
+var danger_timer: float = 0.1
 var debug_cell := Vector2i.ZERO
 
 @onready var bridge_generator = get_node(generator_path)

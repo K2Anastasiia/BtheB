@@ -37,7 +37,7 @@ func _process(delta: float) -> void:
 
 	if not in_bounds:
 		idle_timer = 0.0
-		return  # Игрок вне лабиринта — ничего не делаем
+		return
 
 	if current_cell == last_cell:
 		idle_timer += delta
@@ -50,8 +50,6 @@ func _process(delta: float) -> void:
 
 	queue_redraw()
 
-
-
 func generate_labyrinth():
 	_clear_old_walls()
 	previous_grid = grid.duplicate(true)
@@ -60,7 +58,6 @@ func generate_labyrinth():
 	var entrance = Vector2i(width - 1, 0)
 	var exit = Vector2i(0, height - 1)
 
-	# Получаем текущую клетку игрока
 	var player_cell = Vector2i(-1, -1)
 	if is_instance_valid(player):
 		player_cell = Vector2i(
@@ -68,22 +65,17 @@ func generate_labyrinth():
 			int((player.global_position.y - global_position.y) / cell_size)
 		)
 
-	# Применяем правила КА
 	for i in range(20):
 		grid = _apply_rules(grid, entrance, exit, player_cell)
 
-	# Гарантируем, что вход, выход и клетка игрока — проходы
 	if entrance.x >= 0 and entrance.x < width and entrance.y >= 0 and entrance.y < height:
 		grid[entrance.y][entrance.x] = 0
-
 	if exit.x >= 0 and exit.x < width and exit.y >= 0 and exit.y < height:
 		grid[exit.y][exit.x] = 0
-
 	if player_cell.x >= 0 and player_cell.x < width and player_cell.y >= 0 and player_cell.y < height:
 		grid[player_cell.y][player_cell.x] = 0
 
 	_draw_walls()
-
 
 func _create_noise_grid() -> Array:
 	var new_grid: Array = []
@@ -104,7 +96,6 @@ func _apply_rules(current: Array, entrance: Vector2i, exit: Vector2i, player_cel
    				(x == player_cell.x and y == player_cell.y):
 				row.append(0)
 				continue
-
 
 			var cell = current[y][x]
 			var neighbors = _count_neighbors(current, x, y)
@@ -158,18 +149,21 @@ func _get_wall_from_pool(scene: PackedScene) -> Node2D:
 	var wall: Node2D
 	if wall_pool.is_empty():
 		wall = scene.instantiate()
-		add_child(wall)
 	else:
 		wall = wall_pool.pop_back()
-		wall.queue_free()
-		wall = scene.instantiate()
+
+	if wall.get_parent() == null:
 		add_child(wall)
+
 	wall.show()
 	return wall
 
 func _return_wall_to_pool(wall: Node2D) -> void:
-	wall.hide()
-	wall_pool.append(wall)
+	if is_instance_valid(wall):
+		wall.hide()
+		if wall.get_parent() != null:
+			wall.get_parent().remove_child(wall)
+		wall_pool.append(wall)
 
 func _clear_old_walls():
 	for wall in active_walls:
@@ -186,29 +180,34 @@ func _draw_walls():
 				wall.position = Vector2(x, y) * cell_size + Vector2(cell_size / 2.0, cell_size / 2.0)
 				active_walls.append(wall)
 
+				# Вызов Dirty Flag, если реализован
+				if wall.has_method("mark_dirty"):
+					wall.mark_dirty()
+
 func _on_regen_timer_timeout():
 	if is_instance_valid(player):
 		generate_labyrinth()
 
 func _draw() -> void:
-	if grid.is_empty():
-		return
-
-	var grid_size = Vector2(width, height) * cell_size
-	var grid_rect = Rect2(Vector2.ZERO, grid_size)
-	draw_rect(grid_rect, Color(0.2, 0.2, 0.2, 0.05), true)
-
-	for y in range(height):
-		for x in range(width):
-			var cell_rect = Rect2(Vector2(x, y) * cell_size, Vector2(cell_size, cell_size))
-			draw_rect(cell_rect, Color(0.2, 0.2, 0.2, 0.1), false)
-
-	if is_instance_valid(player):
-		var local_player_pos = player.global_position - global_position
-		var player_cell = Vector2i(
-			int(local_player_pos.x / cell_size),
-			int(local_player_pos.y / cell_size)
-		)
-		if player_cell.x >= 0 and player_cell.y >= 0 and player_cell.x < width and player_cell.y < height:
-			var cell_pos = Vector2(player_cell) * cell_size
-			draw_rect(Rect2(cell_pos, Vector2(cell_size, cell_size)), Color(0, 1, 0, 0), false)
+	#if grid.is_empty():
+		#return
+#
+	#var grid_size = Vector2(width, height) * cell_size
+	#var grid_rect = Rect2(Vector2.ZERO, grid_size)
+	#draw_rect(grid_rect, Color(0.2, 0.2, 0.2, 0.05), true)
+#
+	#for y in range(height):
+		#for x in range(width):
+			#var cell_rect = Rect2(Vector2(x, y) * cell_size, Vector2(cell_size, cell_size))
+			#draw_rect(cell_rect, Color(0.2, 0.2, 0.2, 0.1), false)
+#
+	#if is_instance_valid(player):
+		#var local_player_pos = player.global_position - global_position
+		#var player_cell = Vector2i(
+			#int(local_player_pos.x / cell_size),
+			#int(local_player_pos.y / cell_size)
+		#)
+		#if player_cell.x >= 0 and player_cell.y >= 0 and player_cell.x < width and player_cell.y < height:
+			#var cell_pos = Vector2(player_cell) * cell_size
+			#draw_rect(Rect2(cell_pos, Vector2(cell_size, cell_size)), Color(0, 1, 0, 0), false)
+		pass

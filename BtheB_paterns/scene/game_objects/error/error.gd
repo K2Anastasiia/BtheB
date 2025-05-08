@@ -8,20 +8,35 @@ extends CharacterBody2D
 @export var shadow: Sprite2D
 @export var sprite: CompressedTexture2D
 
+var flash_shader: ShaderMaterial = null
+
 func _ready():
+	# ⏳ Ждём 1 кадр, чтобы узлы успели инициализироваться
+	await get_tree().process_frame
+
+	# 📡 Подключаем сигнал смерти
 	health_component.died.connect(on_died)
+
+	# ⚡ Надёжно загружаем FlashComponent и flash_shader
+	var flash_component := $FlashComponent
+	while not flash_component or not flash_component.flash_material:
+		await get_tree().process_frame
+		flash_component = $FlashComponent
+
+	flash_shader = flash_component.flash_material as ShaderMaterial
+
 
 func _process(delta):
 	move_shadow()
-	
+
 	var direction = movement_component.get_direction()
 	movement_component.move_to_player(self)
-	
-	if direction.x != 0 || direction.y != 0:
+
+	if direction.x != 0 or direction.y != 0:
 		animated_sprite_2d.play("run")
 	else:
 		animated_sprite_2d.play("idle")
-		
+
 	var face_sign = sign(direction.x)
 	if face_sign != 0:
 		animated_sprite_2d.scale.x = face_sign
@@ -33,21 +48,19 @@ func on_died():
 	if death_instance != null:
 		back_layer.add_child(death_instance)
 
-		# Убедимся, что gpu_particles_2d найден
 		if death_instance.gpu_particles_2d != null:
 			death_instance.gpu_particles_2d.texture = sprite
-		
-		# Убедимся, что sprite_offset найден
+
 		if death_instance.sprite_offset != null:
 			death_instance.sprite_offset.position.y = animated_sprite_2d.offset.y
-			
 
 		death_instance.global_position = global_position
 	else:
 		print("Ошибка: death_instance = null")
-	
+
 	queue_free()
-	
+
+
 func move_shadow():
 	if shadow != null:
 		shadow.position = Vector2(0, 0)
