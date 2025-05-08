@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://bo0ix0h2787gm"]
+
+[ext_resource type="Script" path="res://scene/cellular_automata/passage_room.gd" id="1_1w7u2"]
+[ext_resource type="Script" path="res://scene/cellular_automata/rule_30_feeder.gd" id="2_j3jce"]
+[ext_resource type="Script" path="res://scene/cellular_automata/game_of_life_grid.gd" id="2_lc1v0"]
+[ext_resource type="PackedScene" uid="uid://djlji876bs3hp" path="res://scene/cellular_automata/cell_gl1.tscn" id="3_qc4hj"]
+[ext_resource type="PackedScene" uid="uid://bp5yjlehu1vc0" path="res://scene/cellular_automata/cell_gl2.tscn" id="4_vcgwu"]
+
+[node name="PassageController" type="Node2D"]
+script = ExtResource("1_1w7u2")
+
+[node name="GameOfLifeGrid" type="Node2D" parent="."]
+script = ExtResource("2_lc1v0")
+generator_path = NodePath("../Rule30Feeder")
+timer_path = NodePath("Timer")
+cell_gl1 = ExtResource("3_qc4hj")
+cell_gl2 = ExtResource("4_vcgwu")
+
+[node name="Timer" type="Timer" parent="GameOfLifeGrid"]
+
+[node name="Cells" type="Node2D" parent="GameOfLifeGrid"]
+
+[node name="Rule30Feeder" type="Node" parent="."]
+script = ExtResource("2_j3jce")

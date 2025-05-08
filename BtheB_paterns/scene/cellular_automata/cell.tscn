@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8gqrmy0bpara"]
+
+[ext_resource type="Script" path="res://scene/cellular_automata/cell.gd" id="1_bs303"]
+[ext_resource type="Texture2D" uid="uid://bnpee4uhw2xki" path="res://assets/cell.png" id="2_jmxvb"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_bs303")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_jmxvb")

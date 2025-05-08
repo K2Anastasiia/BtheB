@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://06j0forf0a54"]
+
+[ext_resource type="Shader" path="res://scene/components/flash_component.gdshader" id="1_t1obi"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_t1obi")
+shader_parameter/percent = 0.0

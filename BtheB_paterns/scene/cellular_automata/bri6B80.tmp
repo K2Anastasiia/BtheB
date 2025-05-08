@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7il413a78uhu"]
+
+[ext_resource type="Script" path="res://scene/cellular_automata/bridge_area.gd" id="1_s1gwq"]
+[ext_resource type="Script" path="res://scene/cellular_automata/bridge_generator.gd" id="3_yvux1"]
+[ext_resource type="PackedScene" uid="uid://b8gqrmy0bpara" path="res://scene/cellular_automata/cell.tscn" id="4_lnaav"]
+
+[node name="BridgeArea" type="Node2D"]
+script = ExtResource("1_s1gwq")
+generator_path = NodePath("BridgeGenerator")
+timer_path = NodePath("Timer")
+
+[node name="BridgeRoot" type="Node2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="BridgeGenerator" type="Node2D" parent="." node_paths=PackedStringArray("bridge_root")]
+script = ExtResource("3_yvux1")
+cell_scene = ExtResource("4_lnaav")
+bridge_root = NodePath("../BridgeRoot")

@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://8127grb7ljmn"]
+
+[ext_resource type="Script" path="res://scene/game_objects/exp_bug/exp_bug.gd" id="1_fdhhp"]
+[ext_resource type="Texture2D" uid="uid://27bjlut56af7" path="res://scene/game_objects/exp_bug/butterfly_1.png" id="2_607mu"]
+[ext_resource type="Texture2D" uid="uid://w8xyl5tnelko" path="res://scene/game_objects/exp_bug/butterfly_2.png" id="3_i8cca"]
+[ext_resource type="Texture2D" uid="uid://cvq3uwyutrrsg" path="res://scene/game_objects/exp_bug/butterfly_3.png" id="4_uwjsu"]
+[ext_resource type="Texture2D" uid="uid://c4ya2gri5flaj" path="res://scene/game_objects/exp_bug/butterfly_4.png" id="5_802b6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4p0ve"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5qcpl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_607mu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_i8cca")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_uwjsu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_802b6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="ExpBug" type="Node2D"]
+script = ExtResource("1_fdhhp")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_4p0ve")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
+sprite_frames = SubResource("SpriteFrames_5qcpl")
+animation = &"idle"
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

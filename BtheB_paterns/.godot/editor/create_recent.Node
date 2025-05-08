@@ -1,0 +1,14 @@
+CollisionShape2D
+Area2D
+TileMapLayer
+TextureRect
+Sprite2D
+Control
+StaticBody2D
+Timer
+Node2D
+AnimatedSprite2D
+Node
+ColorRect
+SubViewport
+SubViewportContainer

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx55qpky38bjn"]
+
+[ext_resource type="Script" path="res://scene/cellular_automata/fire_cell_1.gd" id="1_7q3f3"]
+[ext_resource type="Texture2D" uid="uid://rbcfmtuxygrq" path="res://assets/message.png" id="2_us73t"]
+
+[node name="BurnedCell1" type="Node2D"]
+script = ExtResource("1_7q3f3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_us73t")

@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://ojo8khygditv"]
+
+[ext_resource type="Script" path="res://sheder/crt_wrapper.gd" id="1_xh5wx"]
+[ext_resource type="PackedScene" uid="uid://dhjmob1me1bda" path="res://scene/level/level.tscn" id="2_s1jnn"]
+[ext_resource type="Shader" path="res://sheder/crt_wrapper.gdshader" id="3_ewl5a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_27opf"]
+shader = ExtResource("3_ewl5a")
+shader_parameter/glitch_amount = 0.0
+
+[node name="CRTWrapper" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_xh5wx")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GameViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="Level" parent="SubViewportContainer/GameViewport" instance=ExtResource("2_s1jnn")]
+
+[node name="PostEffectRect" type="TextureRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_27opf")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

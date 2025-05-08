@@ -1,0 +1,179 @@
+[gd_scene load_steps=29 format=3 uid="uid://b0ump57ta6uh8"]
+
+[ext_resource type="Script" path="res://scene/game_objects/player/player.gd" id="1_8oolj"]
+[ext_resource type="PackedScene" uid="uid://d02yl8nx3spsb" path="res://scene/abilities/attack_ability/attack_controller.tscn" id="2_prcev"]
+[ext_resource type="Script" path="res://scene/components/health_component.gd" id="3_4fq0x"]
+[ext_resource type="PackedScene" uid="uid://7j1itn055ypd" path="res://scene/components/damage_text_component.tscn" id="4_ja3y4"]
+[ext_resource type="PackedScene" uid="uid://lih3615ky2cp" path="res://scene/components/flash_component.tscn" id="5_kyc5p"]
+[ext_resource type="Shader" path="res://scene/components/flash_component.gdshader" id="6_l8oev"]
+[ext_resource type="Texture2D" uid="uid://x5kyqhmfw6ly" path="res://scene/game_objects/player/pl_hurnt_1.png" id="7_bq8gs"]
+[ext_resource type="Texture2D" uid="uid://qu6dacmmhh6s" path="res://scene/game_objects/player/pl_hurnt_2.png" id="8_1vunj"]
+[ext_resource type="Texture2D" uid="uid://cn7a4xl5h5cq3" path="res://scene/game_objects/player/pl_hurnt_3.png" id="9_n8pg5"]
+[ext_resource type="Texture2D" uid="uid://bctx34lc7wyle" path="res://scene/game_objects/player/pl_hurnt_4.png" id="10_pqda8"]
+[ext_resource type="Texture2D" uid="uid://cpf6000htkxhb" path="res://scene/game_objects/player/pl_idel_1.png" id="11_rxhr8"]
+[ext_resource type="Texture2D" uid="uid://c5jxh7vtlvtiy" path="res://scene/game_objects/player/pl_idel_2.png" id="12_mu4no"]
+[ext_resource type="Texture2D" uid="uid://c73itms81dn3r" path="res://scene/game_objects/player/pl_idel_3.png" id="13_woo0r"]
+[ext_resource type="PackedScene" uid="uid://c8re7lujgbs2q" path="res://scene/manager/upgrade_manager.tscn" id="14_63y2f"]
+[ext_resource type="Texture2D" uid="uid://bqeleaqi0phgh" path="res://scene/game_objects/player/pl_idel_4.png" id="14_faqv6"]
+[ext_resource type="Texture2D" uid="uid://c6p6dt7pf1k8m" path="res://scene/game_objects/player/pl_walk_1.png" id="15_0ltp3"]
+[ext_resource type="Texture2D" uid="uid://c2abuyok3xvvg" path="res://scene/game_objects/player/pl_walk_2.png" id="16_3j2sw"]
+[ext_resource type="Texture2D" uid="uid://dysimgkl5gvei" path="res://scene/game_objects/player/pl_walk_3.png" id="17_08txu"]
+[ext_resource type="Texture2D" uid="uid://bm637gvlfaxp5" path="res://scene/game_objects/player/pl_walk_4.png" id="18_4lkmg"]
+[ext_resource type="Texture2D" uid="uid://c4xg3fvllfnvb" path="res://scene/game_objects/player/тень_спрайты.png" id="19_b0dtr"]
+[ext_resource type="Script" path="res://scene/game_objects/player/pivot_debug.gd" id="21_00yoh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fg615"]
+resource_local_to_scene = true
+shader = ExtResource("6_l8oev")
+shader_parameter/percent = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8w18y"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f2hmp"]
+bg_color = Color(0.384314, 0.658824, 0.32549, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kovgu"]
+radius = 52.0096
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x72wf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_bq8gs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_1vunj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_n8pg5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_pqda8")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_rxhr8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_mu4no")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_woo0r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_faqv6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_0ltp3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_3j2sw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_08txu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_4lkmg")
+}],
+"loop": true,
+"name": &"run",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0nrqd"]
+radius = 3.60555
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dvdpp"]
+radius = 4.0
+height = 12.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("shadow") groups=["player"]]
+script = ExtResource("1_8oolj")
+shadow = NodePath("Shadow")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+texture = ExtResource("19_b0dtr")
+
+[node name="AbilityManager" type="Node" parent="."]
+
+[node name="AttackController" parent="AbilityManager" instance=ExtResource("2_prcev")]
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("3_4fq0x")
+damage_text_scene = ExtResource("4_ja3y4")
+
+[node name="FlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("5_kyc5p")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../AnimatedSprite2D")
+flash_material = SubResource("ShaderMaterial_fg615")
+
+[node name="GracePeriod" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(24, 4)
+offset_left = -12.0
+offset_top = 2.0
+offset_right = 12.0
+offset_bottom = 6.0
+pivot_offset = Vector2(12, 2)
+theme_override_styles/background = SubResource("StyleBoxFlat_8w18y")
+theme_override_styles/fill = SubResource("StyleBoxFlat_f2hmp")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="PickUpArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea"]
+shape = SubResource("CircleShape2D_kovgu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -13)
+sprite_frames = SubResource("SpriteFrames_x72wf")
+animation = &"run"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_0nrqd")
+
+[node name="PlayerHurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHurtBox"]
+position = Vector2(0, -6)
+shape = SubResource("CapsuleShape2D_dvdpp")
+
+[node name="UpgradeManager" parent="." instance=ExtResource("14_63y2f")]
+
+[node name="PivotDebug" type="Node2D" parent="."]
+script = ExtResource("21_00yoh")
+
+[connection signal="timeout" from="GracePeriod" to="." method="_on_grace_period_timeout"]
+[connection signal="area_entered" from="PlayerHurtBox" to="." method="_on_player_hurt_box_area_entered"]
+[connection signal="area_exited" from="PlayerHurtBox" to="." method="_on_player_hurt_box_area_exited"]

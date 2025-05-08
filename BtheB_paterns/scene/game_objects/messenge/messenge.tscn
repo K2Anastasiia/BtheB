@@ -1,0 +1,113 @@
+[gd_scene load_steps=19 format=3 uid="uid://ccfrt0r03nd"]
+
+[ext_resource type="Script" path="res://scene/game_objects/error/error.gd" id="1_a2rv8"]
+[ext_resource type="PackedScene" uid="uid://bmc0iyno1hkau" path="res://scene/components/death_component.tscn" id="2_4e0re"]
+[ext_resource type="Texture2D" uid="uid://dfgam1thh3n38" path="res://scene/game_objects/messenge/messenge1.png" id="3_67ffa"]
+[ext_resource type="Texture2D" uid="uid://5l6ofjuhufwp" path="res://assets/shadow_sp.png" id="4_58xx7"]
+[ext_resource type="PackedScene" uid="uid://bknx8pl355mwx" path="res://scene/components/health_component.tscn" id="4_256h5"]
+[ext_resource type="PackedScene" uid="uid://c6p3602p5fvng" path="res://scene/components/exp_bug_drop_component.tscn" id="5_ecnpq"]
+[ext_resource type="PackedScene" uid="uid://bsqh6ixvhfnfg" path="res://scene/components/movement_component.tscn" id="6_kuhu6"]
+[ext_resource type="PackedScene" uid="uid://lih3615ky2cp" path="res://scene/components/flash_component.tscn" id="7_bjdib"]
+[ext_resource type="Shader" path="res://scene/components/flash_component.gdshader" id="8_c7rlc"]
+[ext_resource type="PackedScene" uid="uid://bbjei16oy5wtp" path="res://scene/components/hurt_box_component.tscn" id="9_o7sr1"]
+[ext_resource type="Texture2D" uid="uid://dosuw5324k6bl" path="res://scene/game_objects/messenge/messenge2.png" id="10_vmt71"]
+[ext_resource type="Texture2D" uid="uid://dpht2ih5dafoe" path="res://scene/game_objects/messenge/messenge3.png" id="11_h5o6q"]
+[ext_resource type="Texture2D" uid="uid://d16f4u822j6vr" path="res://scene/game_objects/messenge/messenge.png" id="12_bcv81"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t8eah"]
+resource_local_to_scene = true
+shader = ExtResource("8_c7rlc")
+shader_parameter/percent = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_okd74"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s5s3x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_67ffa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_vmt71")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_h5o6q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_bcv81")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_67ffa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_vmt71")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_h5o6q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_bcv81")
+}],
+"loop": true,
+"name": &"run",
+"speed": 3.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g2svo"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_de3rn"]
+radius = 5.0
+
+[node name="Messenge" type="CharacterBody2D" node_paths=PackedStringArray("shadow") groups=["enemy"]]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_a2rv8")
+death_scene = ExtResource("2_4e0re")
+shadow = NodePath("Shadow")
+sprite = ExtResource("3_67ffa")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+texture = ExtResource("4_58xx7")
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_256h5")]
+
+[node name="ExpBottleDropComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_ecnpq")]
+health_component = NodePath("../HealthComponent")
+
+[node name="MovementComponent" parent="." instance=ExtResource("6_kuhu6")]
+
+[node name="FlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("7_bjdib")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../AnimatedSprite2D")
+flash_material = SubResource("ShaderMaterial_t8eah")
+
+[node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("9_o7sr1")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_okd74")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_s5s3x")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_g2svo")
+
+[node name="EnemyHitBox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="EnemyHitBox"]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_de3rn")

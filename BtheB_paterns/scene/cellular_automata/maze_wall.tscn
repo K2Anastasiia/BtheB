@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://qanh23ys7m6i"]
+
+[ext_resource type="Script" path="res://scene/cellular_automata/maze_wall.gd" id="1_amx3x"]
+[ext_resource type="Texture2D" uid="uid://203nyb8otis4" path="res://assets/maze_wall_1.png" id="2_j3xcx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3xo5f"]
+size = Vector2(16, 16)
+
+[node name="MazeWall" type="Node2D"]
+script = ExtResource("1_amx3x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_j3xcx")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_3xo5f")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://0v0noh4wlipi"]
+
+[ext_resource type="Script" path="res://scene/manager/spawner/enemy_spawner.gd" id="1_2qk8y"]
+[ext_resource type="PackedScene" uid="uid://gkjsjqkbm64f" path="res://scene/game_objects/error/error.tscn" id="2_8jh24"]
+[ext_resource type="PackedScene" uid="uid://bfvif0ep6bu5g" path="res://scene/game_objects/warning/warning.tscn" id="3_tt531"]
+[ext_resource type="PackedScene" uid="uid://ccfrt0r03nd" path="res://scene/game_objects/messenge/messenge.tscn" id="4_wfurx"]
+
+[node name="EnemySpawner" type="Node"]
+script = ExtResource("1_2qk8y")
+error_scene = ExtResource("2_8jh24")
+warning_scene = ExtResource("3_tt531")
+messenge_scene = ExtResource("4_wfurx")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

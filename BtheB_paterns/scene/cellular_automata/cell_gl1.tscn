@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://djlji876bs3hp"]
+
+[ext_resource type="Texture2D" uid="uid://dyh432uwtpk3e" path="res://assets/error_1.png" id="1_yl77g"]
+
+[node name="CellGl1" type="Sprite2D"]
+texture = ExtResource("1_yl77g")

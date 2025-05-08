@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://cls4mx3yxmvyd"]
+
+[ext_resource type="Script" path="res://scene/cellular_automata/maze_room.gd" id="1_u2fon"]
+[ext_resource type="PackedScene" uid="uid://qanh23ys7m6i" path="res://scene/cellular_automata/maze_wall.tscn" id="2_qwgms"]
+[ext_resource type="PackedScene" uid="uid://cj1grndh6csjk" path="res://scene/cellular_automata/MazeWall_2.tscn" id="3_ndd7l"]
+
+[node name="MazeRoom" type="Node2D"]
+script = ExtResource("1_u2fon")
+WallScene1 = ExtResource("2_qwgms")
+WallScene2 = ExtResource("3_ndd7l")
+
+[node name="Timer" type="Timer" parent="."]

@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://c04rmgls38w5w"]
+
+[ext_resource type="Script" path="res://scene/game_objects/player/fair_forest.gd" id="1_v0k0q"]
+[ext_resource type="PackedScene" uid="uid://b7e6iibcohq45" path="res://scene/cellular_automata/fire_cell_1.tscn" id="2_qy6ys"]
+[ext_resource type="PackedScene" uid="uid://lgd4eqs38sbf" path="res://scene/cellular_automata/fire_cell_2.tscn" id="3_px62q"]
+
+[node name="FairForest" type="Node2D"]
+script = ExtResource("1_v0k0q")
+fire_cell_scene_1 = ExtResource("2_qy6ys")
+fire_cell_scene_2 = ExtResource("3_px62q")
+
+[node name="FireLayer" type="Node2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
