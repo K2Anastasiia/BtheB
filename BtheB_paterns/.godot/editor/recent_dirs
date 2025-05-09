@@ -1,4 +1,5 @@
 D:/Godot_game/web
+res://scene/components
 res://sheder
 res://scene/game_objects/exp_bug
 res://scene/cellular_automata
@@ -6,7 +7,6 @@ res://
 res://scene/game_objects/player
 res://assets
 res://scene/manager
-res://scene/components
 res://resources/theme
 res://scene/ui
 res://scene/global

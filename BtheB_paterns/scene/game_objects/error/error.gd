@@ -12,6 +12,7 @@ var flash_shader: ShaderMaterial = null
 
 func _ready():
 	# ⏳ Ждём 1 кадр, чтобы узлы успели инициализироваться
+	
 	await get_tree().process_frame
 
 	# 📡 Подключаем сигнал смерти
@@ -25,6 +26,7 @@ func _ready():
 
 	flash_shader = flash_component.flash_material as ShaderMaterial
 
+	
 
 func _process(delta):
 	move_shadow()
@@ -45,20 +47,26 @@ func _process(delta):
 func on_died():
 	var back_layer = get_tree().get_first_node_in_group("back_layer")
 	var death_instance = death_scene.instantiate() as DeathComp
+
 	if death_instance != null:
 		back_layer.add_child(death_instance)
 
-		if death_instance.gpu_particles_2d != null:
-			death_instance.gpu_particles_2d.texture = sprite
+		# 🌀 Задаём текстуру для эффекта смерти (частицы)
+		if death_instance.particles_2d != null:
+			death_instance.particles_2d.texture = sprite
 
+		# ⚙️ Подгоняем вертикальное смещение спрайта
 		if death_instance.sprite_offset != null:
 			death_instance.sprite_offset.position.y = animated_sprite_2d.offset.y
 
+		# 📍 Устанавливаем позицию появления
 		death_instance.global_position = global_position
 	else:
 		print("Ошибка: death_instance = null")
 
+	# ❌ Удаляем врага
 	queue_free()
+
 
 
 func move_shadow():

@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://gkjsjqkbm64f"]
 
 [ext_resource type="Script" path="res://scene/game_objects/error/error.gd" id="1_5sa7q"]
-[ext_resource type="PackedScene" uid="uid://bmc0iyno1hkau" path="res://scene/components/death_component.tscn" id="2_3f8hl"]
+[ext_resource type="PackedScene" uid="uid://cwj452cldwn7j" path="res://scene/components/death_component.tscn" id="2_3f8hl"]
 [ext_resource type="Texture2D" uid="uid://ftf7wcxowaqg" path="res://scene/game_objects/error/error_idle.png" id="3_n7h83"]
 [ext_resource type="Texture2D" uid="uid://5l6ofjuhufwp" path="res://assets/shadow_sp.png" id="4_tyoil"]
 [ext_resource type="PackedScene" uid="uid://bknx8pl355mwx" path="res://scene/components/health_component.tscn" id="5_pq0ha"]

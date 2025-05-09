@@ -19,8 +19,8 @@ void fragment() {
     vec4 tex = texture(TEXTURE, uv);
 
     // Основной цвет
-    //vec3 normal_tint = vec3(0.49, 0.466, 0.655);
-	vec3 normal_tint = vec3(0.2, 1.0, 0.2);
+    vec3 normal_tint = vec3(0.49, 0.466, 0.655);
+	//vec3 normal_tint = vec3(0.2, 1.0, 0.2);
 
     vec3 hit_tint = vec3(1.5, 0.05, 0.05);  // красный при уроне
 

@@ -1,13 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmc0iyno1hkau"]
+[gd_scene load_steps=6 format=3 uid="uid://cwj452cldwn7j"]
 
-[ext_resource type="Script" path="res://scene/components/death_component.gd" id="1_wph5i"]
+[ext_resource type="Script" path="res://scene/components/death_component.gd" id="1"]
 
-[sub_resource type="Animation" id="Animation_l6vvl"]
+[sub_resource type="Animation" id="RESET"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SpriteOffset/GPUParticles2D:emitting")
+tracks/0/path = NodePath("SpriteOffset/CPUParticles2D:emitting")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -17,13 +17,13 @@ tracks/0/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_vb6qk"]
+[sub_resource type="Animation" id="death"]
 resource_name = "death"
 length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SpriteOffset/GPUParticles2D:emitting")
+tracks/0/path = NodePath("SpriteOffset/CPUParticles2D:emitting")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -47,46 +47,37 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lu1h3"]
+[sub_resource type="AnimationLibrary" id="library"]
 _data = {
-"RESET": SubResource("Animation_l6vvl"),
-"death": SubResource("Animation_vb6qk")
+"RESET": SubResource("RESET"),
+"death": SubResource("death")
 }
 
-[sub_resource type="Curve" id="Curve_gfmf1"]
-_data = [Vector2(0.7, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.032967), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_so6r3"]
-curve = SubResource("Curve_gfmf1")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_focmh"]
-particle_flag_disable_z = true
-direction = Vector3(0, -1, 0)
-spread = 15.0
-initial_velocity_min = 85.0
-initial_velocity_max = 175.0
-angular_velocity_min = -110.0
-angular_velocity_max = 110.0
-gravity = Vector3(0, 500, 0)
-alpha_curve = SubResource("CurveTexture_so6r3")
+[sub_resource type="Gradient" id="Gradient_0tsw8"]
+interpolation_mode = 2
+colors = PackedColorArray(3.41728e-06, 0.830169, 0.379113, 0.807843, 1, 1, 1, 0.447059)
+metadata/_snap_enabled = true
+metadata/_snap_count = 13
 
 [node name="DeathComponent" type="Node2D"]
-script = ExtResource("1_wph5i")
+script = ExtResource("1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_lu1h3")
+"": SubResource("library")
 }
 autoplay = "death"
 
 [node name="SpriteOffset" type="Node2D" parent="."]
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="SpriteOffset"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="SpriteOffset"]
 emitting = false
 amount = 1
-process_material = SubResource("ParticleProcessMaterial_focmh")
-lifetime = 0.8
+lifetime = 0.4
 one_shot = true
-fixed_fps = 0
-interpolate = false
+direction = Vector2(0, -1)
+spread = 33.0
+gravity = Vector2(0, 0.5)
+initial_velocity_min = 30.0
+initial_velocity_max = 60.0
+color_ramp = SubResource("Gradient_0tsw8")

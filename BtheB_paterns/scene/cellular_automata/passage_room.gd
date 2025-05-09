@@ -87,4 +87,4 @@ func _draw() -> void:
 	# Отладка: выделим текущую ячейку игрока
 	if debug_in_bounds:
 		var cell_pos = grid_rect.position + Vector2(debug_cell.x, debug_cell.y) * cell_size
-		draw_rect(Rect2(cell_pos, Vector2(cell_size, cell_size)), Color(0, 1, 0, 0.3), false)
+		draw_rect(Rect2(cell_pos, Vector2(cell_size, cell_size)), Color(0, 1, 0, 0.0), false)
